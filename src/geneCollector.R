@@ -1,30 +1,8 @@
----
-title: "brainstorming"
-output: pdf_document
-date: "2025-06-09"
----
-
-```{r setup, include=FALSE}
+## ----setup, include=FALSE-----------------------------------------
 knitr::opts_chunk$set(echo = TRUE)
-```
 
-# Debugging:
 
--   Task 1 issues:
-
-    -   I am unsure why keys are printing to console
-
--   Task 2 issues:
-
-    -   Merge returns a 2 column data frame, but I only want one column per species.
-
-        -   solution: Remove duplicate rows that have no species for row 1
-
-    -   
-
-## Preparing genes for analysis
-
-```{r}
+## -----------------------------------------------------------------
 
 library(stringr)
 library(readr)
@@ -108,24 +86,6 @@ updateUniqueGenes <- function(species_gene){
 }
 
 
-mergeData <- function(species_gene, genes){
-    
-}
-
 
 var1 <- geneCollector()
-```
 
-# Task 2:
-
-Create a new .tsv file.\
-Add a col for every species
-
-Add a row for every gene in genes
-
-For every species, check for matches between every gene in their data frame for a match in genes. If a match is found, place element in df[species name, gene found]
-
-```         
-```
-
--   COL 2 should contain all gene names. Look through every gene name. For every new gene, append that gene to the list that stores genes. 
