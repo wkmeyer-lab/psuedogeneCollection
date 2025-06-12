@@ -1,8 +1,8 @@
-## ----setup, include=FALSE-----------------------------------------
+## ----setup, include=FALSE-------------------------------------------------------------------------------------------------
 knitr::opts_chunk$set(echo = TRUE)
 
 
-## -----------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------------
 
 library(stringr)
 library(readr)
@@ -11,9 +11,9 @@ library(dplyr)
 #geneCollector accesses and cleans loss_summ_data for each species to be examined. Then, it  
 geneCollector <- function(){
   # Access losssum.tsv
-  #setwd("~/meyerLab/psuedogeneCollector/data")
+  setwd("~/meyerLab/psuedogeneCollector/data")
   files <- list.files(
-    path ="~/meyerLab/psuedogeneCollector/data", 
+    path = ".", # "~/meyerLab/psuedogeneCollector/data", 
     recursive=TRUE, 
     pattern = "loss_summ_data",
     full.names=TRUE)
@@ -38,18 +38,14 @@ grabData <- function(files){
     counter <- counter + 1
     if(counter > 5) break
 
-    
     #Setting key-value pairs
     name <- substring(files[i], temp[3, 1] +1 , temp[4, 1] -1)
     key <- paste("Key: ", name , sep = " ")
     value <- cleanData(files[i]) #returns clean .tsv
     species_gene[[key]] <- value
-
-    cat("\n\n\n\n ", counter, " iterations /n/n/n/n/n")
-
   }  
   
-  
+
   return(species_gene)
 }
 
@@ -71,12 +67,14 @@ updateUniqueGenes <- function(species_gene){
   genes <- character(length=0)
   listOfAllGenes<- unname(species_gene)
   
+  cleanListOfAllGenes <- listOfAllGenes[[1]][,1]
+  
      counter = 0
 
   
-  for(gene in listOfAllGenes) {
+  for(genesList in cleanListOfAllGenes) {
     counter <- counter + 1
-    genes <- union(genes, listOfAllGenes)  # performs set union operation on genes character vector AND df[,1] column subset.
+    genes <- union(genes, genesList)  # performs set union operation on genes character vector AND df[,1] column subset.
 
         if(counter > 5) break
 
@@ -85,6 +83,10 @@ updateUniqueGenes <- function(species_gene){
   return(genes)
 }
 
+
+mergeData <- function(species_gene, genes){
+    #ISSUES: species_gene[[1]][[1]] is a character, need to be in dataframe format
+}
 
 
 var1 <- geneCollector()

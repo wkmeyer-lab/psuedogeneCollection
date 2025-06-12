@@ -33,16 +33,16 @@ library(dplyr)
 #geneCollector accesses and cleans loss_summ_data for each species to be examined. Then, it  
 geneCollector <- function(){
   # Access losssum.tsv
-  #setwd("~/meyerLab/psuedogeneCollector/data")
+  setwd("~/meyerLab/psuedogeneCollector/data")
   files <- list.files(
-    path ="~/meyerLab/psuedogeneCollector/data", 
+    path = ".", # "~/meyerLab/psuedogeneCollector/data", 
     recursive=TRUE, 
     pattern = "loss_summ_data",
     full.names=TRUE)
   
   species_gene <- grabData(files)
   genes <- updateUniqueGenes(species_gene)
-  
+  mergeData(species_gene, genes)
   return(list(species_gene = species_gene, genes = genes))
 }
 
@@ -60,18 +60,14 @@ grabData <- function(files){
     counter <- counter + 1
     if(counter > 5) break
 
-    
     #Setting key-value pairs
     name <- substring(files[i], temp[3, 1] +1 , temp[4, 1] -1)
     key <- paste("Key: ", name , sep = " ")
     value <- cleanData(files[i]) #returns clean .tsv
     species_gene[[key]] <- value
-
-    cat("\n\n\n\n ", counter, " iterations /n/n/n/n/n")
-
   }  
   
-  
+
   return(species_gene)
 }
 
@@ -91,14 +87,14 @@ cleanData <- function(f){
 #' @author Tyler gruver    
 updateUniqueGenes <- function(species_gene){
   genes <- character(length=0)
-  listOfAllGenes<- unname(species_gene)
+  cleanListOfAllGenes <- getGenesFromSpecies(species_gene)
   
      counter = 0
 
   
-  for(gene in listOfAllGenes) {
+  for(genesList in cleanListOfAllGenes) {
     counter <- counter + 1
-    genes <- union(genes, listOfAllGenes)  # performs set union operation on genes character vector AND df[,1] column subset.
+    genes <- union(genes, genesList)  # performs set union operation on genes character vector AND df[,1] column subset.
 
         if(counter > 5) break
 
@@ -107,9 +103,37 @@ updateUniqueGenes <- function(species_gene){
   return(genes)
 }
 
+getGenesFromSpecies <- function(species_gene, genes){
+  listOfAllGenes<- unname(species_gene)
+  return(listOfAllGenes[[1]][,1])
+}
 
-mergeData <- function(species_gene, genes){
+mergeData <- function(sg, genes){
+
+  #reformatting genes and species_gene to prepare or merging
+  df_sg <- data.frame(genesOfKey = sg[[1]][[1]][1:5])
+  names(df_sg)[1] <- names(sg)[1]
+  
+  for (i in 2:3){ #nrows(species_gene)
+    df_sg[[i]] <- sg[[i]][[1]]
+    names(df_sg)[i] <- names(sg)[i]
+  }
+   
+  df_genes <- data.frame(species = genes[1:15])
+  
+    #data now is formatted correctly, ready to merge
+  for(i in 1:3){ #ncol(df_sg)
+    geneAlignment <- merge(df_genes, df_sg, by.x = "species", by.y = names(df_sg)[i], all.x = TRUE)
+  }
+    View(geneAlignment)
     
+    #Merged Data Frames. Now must append 1 or 0 values 
+  matchIndex <- list()
+  for(i in 1:3){ # ncol(df_sg)
+    lookup <- names(sg)[i] #contains all genes: name --> tibble --> first vector
+    matchIndex <- match(geneAlignment, lookup)
+  }
+    print(matchIndex)
 }
 
 

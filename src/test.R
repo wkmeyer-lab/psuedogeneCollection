@@ -6,6 +6,7 @@ library(stringr)
 library(readr)
 library(dplyr)
 
+setwd("~/meyerLab/psuedogeneCollector/src")
 names(var1) <- c("species_gene", "genes")
 
 sg <- var1$species_gene
@@ -16,16 +17,21 @@ genes <- var1$gene
 testGenes <- function(v){
   print(head(v))
 }
-testGenes(genes) 
+#testGenes(genes) 
 
+generalTesting<- function(sg, genes){
+  ##Debugging
 
-##Debugging
-# for (i in 1:3){
-#   cat("Contents: ")
-#   species_gene[[i]][,1]
-#   cat("Type: ")
-#   typeof(species_gene[[i]][,1])
-# }
+    cat("df_sg: ")
+    df_sg <- data.frame(gene = sg[[1]][[1]][1:5]) 
+    print((df_sg))
+    cat("nrow: ", nrow(df_sg), "ncol: ", ncol(df_sg))
+    
+    cat("\n\n df_genes: ")
+    df_genes <- data.frame(allGenes = genes[1:5])
+    print(df_genes)
+}
+generalTesting(sg, genes)
 
 # ###Testing: 
 # cat("\n\n\n Testing species_gene dictionary: \n") # --> Test passed
