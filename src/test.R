@@ -22,14 +22,16 @@ testGenes <- function(v){
 generalTesting<- function(sg, genes){
   ##Debugging
 
-    cat("df_sg: ")
-    df_sg <- data.frame(gene = sg[[1]][[1]][1:5]) 
-    print((df_sg))
-    cat("nrow: ", nrow(df_sg), "ncol: ", ncol(df_sg))
-    
-    cat("\n\n df_genes: ")
-    df_genes <- data.frame(allGenes = genes[1:5])
-    print(df_genes)
+    # cat("df_sg: ")
+    # df_sg <- data.frame(gene = sg[[1]][[1]][1:5])
+    # print((df_sg))
+    # cat("nrow: ", nrow(df_sg), "ncol: ", ncol(df_sg))
+    # 
+    # cat("\n\n df_genes: ")
+    # df_genes <- data.frame(allGenes = genes[1:5])
+    # print(df_genes)
+  
+  #View(sg[[1]])
 }
 generalTesting(sg, genes)
 

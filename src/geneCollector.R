@@ -1,8 +1,8 @@
-## ----setup, include=FALSE-------------------------------------------------------------------------------------------------
+## ----setup, include=FALSE------------------------------------------------------------------
 knitr::opts_chunk$set(echo = TRUE)
 
 
-## -------------------------------------------------------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------
 
 library(stringr)
 library(readr)
@@ -20,7 +20,7 @@ geneCollector <- function(){
   
   species_gene <- grabData(files)
   genes <- updateUniqueGenes(species_gene)
-  
+  #mergeData(species_gene, genes)
   return(list(species_gene = species_gene, genes = genes))
 }
 
@@ -65,9 +65,7 @@ cleanData <- function(f){
 #' @author Tyler gruver    
 updateUniqueGenes <- function(species_gene){
   genes <- character(length=0)
-  listOfAllGenes<- unname(species_gene)
-  
-  cleanListOfAllGenes <- listOfAllGenes[[1]][,1]
+  cleanListOfAllGenes <- getGenesFromSpecies(species_gene)
   
      counter = 0
 
@@ -83,9 +81,27 @@ updateUniqueGenes <- function(species_gene){
   return(genes)
 }
 
+getGenesFromSpecies <- function(species_gene, genes){
+  listOfAllGenes<- unname(species_gene)
+  return(listOfAllGenes[[1]][,1])
+}
 
-mergeData <- function(species_gene, genes){
-    #ISSUES: species_gene[[1]][[1]] is a character, need to be in dataframe format
+mergeData <- function(sg, genes){
+
+   df_merged <- data.frame(species = genes)
+   
+for (i in seq_along(sg)) {
+  species_df <- sg[[i]]             # tibble: gene + presence
+  colnames(species_df) <- c("gene", "label")
+
+  merged <- merge(df_merged, species_df, by.x = "species", by.y = "gene", all.x = TRUE)
+
+  # Save label column and rename it to species
+  df_merged[[ names(sg)[i] ]] <- merged$label
+}
+   
+   View(df_merged)
+  
 }
 
 

@@ -29,6 +29,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(stringr)
 library(readr)
 library(dplyr)
+library(gtools)
 
 #geneCollector accesses and cleans loss_summ_data for each species to be examined. Then, it  
 geneCollector <- function(){
@@ -108,38 +109,31 @@ getGenesFromSpecies <- function(species_gene, genes){
   return(listOfAllGenes[[1]][,1])
 }
 
-mergeData <- function(sg, genes){
-
-   df_merged <- data.frame(species = genes)
-   
-for (i in seq_along(sg)) {
-  species_df <- sg[[i]]             # tibble: gene + presence
-  colnames(species_df) <- c("gene", "label")
-
-  merged <- merge(df_merged, species_df, by.x = "species", by.y = "gene", all.x = TRUE)
-
-  # Save label column and rename it to species
-  df_merged[[ names(sg)[i] ]] <- merged$label
-}
-   
-   View(df_merged)
-  
-}
-
 
 var1 <- geneCollector()
 ```
 
 # Task 2:
 
-Create a new .tsv file.\
-Add a col for every species
+```{r}
 
-Add a row for every gene in genes
+mergeData <- function(sg, genes){
+   genes <- mixedsort(genes)
+   df_merged <- data.frame(species = genes) #Converts genes to a dataframe to prepare to merge
+   
+for (i in seq_along(sg)) { #iterate every even index in sg (AKA every key)
+  species_df <- sg[[i]] #grab tibble of the key being iterated on and convert to data frame to prepare for merge
+  colnames(species_df) <- c("gene", "label") #define a name for these data frames so that I can specify which column to merge. Merge against "species", which contains genes of [ith] species using "gene".  
 
-For every species, check for matches between every gene in their data frame for a match in genes. If a match is found, place element in df[species name, gene found]
+  merged <- merge(df_merged, species_df, by.x = "species", by.y = "gene", all.x = TRUE)
 
-```         
+ # if(i == 1) View(merged)
+  # Save label column and rename it to species
+  df_merged[[ names(sg)[i] ]] <- merged$label
+}
+   
+  View(df_merged)
+  
+}
+
 ```
-
--   COL 2 should contain all gene names. Look through every gene name. For every new gene, append that gene to the list that stores genes. 
