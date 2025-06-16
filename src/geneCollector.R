@@ -1,14 +1,18 @@
-## ----setup, include=FALSE------------------------------------------------------------------
+## ----setup, include=FALSE--------------------------------------------------------------------------------------------------------------------------------------------------------
 knitr::opts_chunk$set(echo = TRUE)
 
 
-## ------------------------------------------------------------------------------------------
-
+## --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 library(stringr)
 library(readr)
 library(dplyr)
+library(gtools)
 
-#geneCollector accesses and cleans loss_summ_data for each species to be examined. Then, it  
+
+#' Takes losssum data from:
+#'  https://genome.senckenberg.de/download/TOGA/human_hg38_reference/
+#'  and repackages data to a .tsv where every GENE ID is on col 1 and every subsequent col's rows contains the presence or absence of GENE ID of that same row.   
+#' @author Tyler gruver
 geneCollector <- function(){
   # Access losssum.tsv
   setwd("~/meyerLab/psuedogeneCollector/data")
@@ -20,9 +24,12 @@ geneCollector <- function(){
   
   species_gene <- grabData(files)
   genes <- updateUniqueGenes(species_gene)
-  #mergeData(species_gene, genes)
-  return(list(species_gene = species_gene, genes = genes))
+  GeneIDToPresencePerSpecies<-mergeData(species_gene, genes)
+  #View(GeneIDToPresencePerSpecies)
+  write_tsv(GeneIDToPresencePerSpecies, path = "psuedo.tsv")
+  
 }
+
 
 #' Obtains and cleans loss_summ_data
 #' @param files --> Vector containing absolute paths to every instance of loss_summ_data
@@ -35,9 +42,6 @@ grabData <- function(files){
   for(i in 1:length(files)){
     temp <- str_locate_all(files[i], "/")[[1]] #temp returns a list of matrixes. [[1]] grabs the matrix  at position 1... temp will only ever be a list of length 1 
     
-    counter <- counter + 1
-    if(counter > 5) break
-
     #Setting key-value pairs
     name <- substring(files[i], temp[3, 1] +1 , temp[4, 1] -1)
     key <- paste("Key: ", name , sep = " ")
@@ -67,32 +71,34 @@ updateUniqueGenes <- function(species_gene){
   genes <- character(length=0)
   cleanListOfAllGenes <- getGenesFromSpecies(species_gene)
   
-     counter = 0
-
-  
   for(genesList in cleanListOfAllGenes) {
-    counter <- counter + 1
     genes <- union(genes, genesList)  # performs set union operation on genes character vector AND df[,1] column subset.
-
-        if(counter > 5) break
-
+    
   }
   
   return(genes)
 }
 
+#' Parses through species_gene key to obtain all genes that belong to the second col of every VALUE to each KEY within dictionary 
+#' @param species_gene, genes --> species_gene is parsed. genes is unnecessary, too lazy to remove :) 
+#' @return A list where every element is the character vector of genes.
+#' @author Tyler gruver
 getGenesFromSpecies <- function(species_gene, genes){
   listOfAllGenes<- unname(species_gene)
   return(listOfAllGenes[[1]][,1])
 }
 
+#' Merges species VALUES  against list of genes sorted numerically in ascending order
+#' @param sg --> Dictionary where key = species name, value = a tibble where col 1 = geneID, col 2 = PRESENCE  
+#' @return data.frame to write to tsv
+#' @author Tyler gruver
 mergeData <- function(sg, genes){
-
-   df_merged <- data.frame(species = genes)
+   genes <- mixedsort(genes)
+   df_merged <- data.frame(species = genes) #Converts genes to a dataframe to prepare to merge
    
-for (i in seq_along(sg)) {
-  species_df <- sg[[i]]             # tibble: gene + presence
-  colnames(species_df) <- c("gene", "label")
+for (i in seq_along(sg)) { #iterate every even index in sg (AKA every key)
+  species_df <- sg[[i]] #grab tibble of the key being iterated on and convert to data frame to prepare for merge
+  colnames(species_df) <- c("gene", "label") #define a name for these data frames so that I can specify which column to merge. Merge against "species", which contains genes of [ith] species using "gene".  
 
   merged <- merge(df_merged, species_df, by.x = "species", by.y = "gene", all.x = TRUE)
 
@@ -100,10 +106,24 @@ for (i in seq_along(sg)) {
   df_merged[[ names(sg)[i] ]] <- merged$label
 }
    
-   View(df_merged)
+  for (col in names(df_merged)[-1]) {  
+    for (i in seq_len(nrow(df_merged))) {
+      df_merged[i, col] <- switch(
+      df_merged[i, col],
+      "I" = 1,
+      "UL" = 1,
+      "PI" = 1,
+       "L" = 0,
+      "M" = NA,
+      "PM" = NA,
+      "PG" = NA,
+      NA  # default is NA if unmatched or NULL
+    )
+  }
+}
+  return(df_merged)
   
 }
 
-
-var1 <- geneCollector()
+geneCollector()
 
