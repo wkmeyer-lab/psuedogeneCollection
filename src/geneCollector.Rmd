@@ -19,7 +19,7 @@ library(gtools)
 
 #' Takes losssum data from:
 #'  https://genome.senckenberg.de/download/TOGA/human_hg38_reference/
-#'  and repackages data to a .tsv where every GENE ID is on col 1 and every subsequent col's rows contains the presence or absence of GENE ID of that same row.   
+#'  and repackages data to a .tsv where every GENE ID is on col 1 and every subsequent col's rows contains the presence or absence of GENE ID of that same row. Also writes csv containing every species obtained in script, such that ever row = new species.
 #' @author Tyler gruver
 geneCollector <- function(){
   # Access losssum.tsv
@@ -30,11 +30,13 @@ geneCollector <- function(){
     pattern = "loss_summ_data",
     full.names=TRUE)
   
-  species_gene <- grabData(files)
+  species_gene <- getData(files)
+  allSpecies <- data.frame(speciesList = names(species_gene))
   genes <- updateUniqueGenes(species_gene)
   GeneIDToPresencePerSpecies<-mergeData(species_gene, genes)
   #View(GeneIDToPresencePerSpecies)
   write_tsv(GeneIDToPresencePerSpecies, path = "psuedo.tsv")
+  write_csv(allSpecies, path = "ListOfSpecies")
   
 }
 
@@ -43,7 +45,7 @@ geneCollector <- function(){
 #' @param files --> Vector containing absolute paths to every instance of loss_summ_data
 #' @return A list formatted as a dictionary --> key = character (species name), value = df (clean loss_summ_data)
 #' @author Tyler gruver
-grabData <- function(files){
+getData <- function(files){
   species_gene <- list() #key == species name, value == .tsv file containing losssum data
    counter <- 0
 
@@ -52,7 +54,7 @@ grabData <- function(files){
     
     #Setting key-value pairs
     name <- substring(files[i], temp[3, 1] +1 , temp[4, 1] -1)
-    key <- paste("Key: ", name , sep = " ")
+    key <- paste(name , sep = " ")
     value <- cleanData(files[i]) #returns clean .tsv
     species_gene[[key]] <- value
   }  
