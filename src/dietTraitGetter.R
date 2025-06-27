@@ -7,7 +7,8 @@
 #' /
 
 
-getwd()
+cat(getwd())
+
 main <- function(){
   dirtyData <- read.csv("../data/mergedData")
   
@@ -23,7 +24,8 @@ main <- function(){
 }
 
 
- temp <- main()
+ 
+ #temp <- main()
 
  #' Method to include species only present in "species" within listOfSpecies
  #'@param species all species obtained from merged data
