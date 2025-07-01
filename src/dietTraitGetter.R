@@ -1,5 +1,7 @@
 
  #' Creates trait file to be used as input for bayestraits
+ #' Creates FaName file to be used for tree pruning
+ 
 #' Output format: col 1: Species, col 2: Phenotype
 #' #############################################
 #' Is it OK to have NA?
@@ -10,43 +12,31 @@ library(here)
 main <- function(){
 
   dirtySpDi <- read.csv(here("data", "mergedData.csv"))
-  dirtySpFa <- read.csv(here("data", "Manual Annotations_WM - Sheet1.csv"))
-  
+ 
   species <- dirtySpDi[,3] # obtains scientific name
   cleanLiSpecies <- cleanSpecies(species) # remove unnecessary species
-  
-  allDuplicates<- cleanLiSpecies[duplicated(cleanLiSpecies) | duplicated(cleanLiSpecies, fromLast=TRUE)] # grab "duplicate species to inspect later
-  allDupeIndex <- which(cleanLiSpecies %in% allDuplicates)
-  dupeDF <- data.frame(allDuplicates, allDupeIndex) # to write
-  
-  cleanLiSpecies <- unique(cleanLiSpecies) # remove "duplicate" species
-  
+  fa_species <- sub(".*__", "vs", cleanLiSpecies) # regex = pain 
   dirty_Spec_diet <- dirtySpDi[, c(3, length(dirtySpDi))] #grab scientific name, diet
   Spec_Diet <- mapSpeciesToSomething(cleanLiSpecies, dirty_Spec_diet)
-  dirty_Spec_FA <- dirtySpFa[, c(3, 10)] #grab scientific name, FaName
-  sp_Fasp <- mapSpeciesToSomething(cleanLiSpecies, dirty_Spec_FA)
-  sp_Fasp <- sp_Fasp[-1]
-  
-  
-  #for use in treeCleaner
-  save_tsv(cleanLiSpecies, "UpdatedListOfSpecies")
+
   
 
+  #for use in treeCleaner: Pruning tree + use to keep track of what species from tree wasn't on this
+  save_tsv(fa_species, "fa_species")
+
+  #for use in treeCleaner: use w/ fa_species to convert fa_species back to normal naming convenction
+  save_tsv(cleanLiSpecies, "UpdatedListOfSpecies")
+  
   #for use in Bayestraits script
   save_tsv(Spec_Diet, "dietTraits")
   
-  #for use in treeCleaner: col[1] = species, col[2] = FaName
-  save_tsv(sp_Fasp, "speciesName_FaName")
-  
-  #to inspect deleted data
-  save_tsv(dupeDF, "duplicateSpecies")
+
 }
 
 #' @method to automatically write tsv, saves time...
 save_tsv <- function(obj, filename) {
   write.table(obj, here("data", filename), sep = "\t", row.names = FALSE, quote = FALSE)
 }
-
 
 
 #' @method to take vector and dataframe, and grab each row where elements in vector match the nth row, first col of dataframe
@@ -65,7 +55,6 @@ save_tsv <- function(obj, filename) {
  #'@return list containing all species that are the same in both species within listOfSpecies and mergedData, removed duplicates
  cleanSpecies <- function(species){
   allSpDirty <- read.table(here("data", "ListOfSpecies"))[,1] # 1 species/row --> n elements in list
-  allSpClean <- truncateSp(allSpDirty)
   
   # cat("with repeats: ", length(allSpClean), length(species))
   # cat( "\n\n without repeats: ", length(unique(allSpClean))," ", length(unique(species)))

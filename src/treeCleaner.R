@@ -29,3 +29,9 @@ main <- function(){
 
 
 main()
+
+
+# allDuplicates<- cleanLiSpecies[duplicated(cleanLiSpecies) | duplicated(cleanLiSpecies, fromLast=TRUE)] # grab "duplicate species to inspect later
+# allDupeIndex <- which(cleanLiSpecies %in% allDuplicates)
+# dupeDF <- data.frame(allDuplicates, allDupeIndex) # to write
+#cleanLiSpecies <- unique(cleanLiSpecies) # remove "duplicate" species
