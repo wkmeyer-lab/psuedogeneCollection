@@ -5,7 +5,8 @@ library(ape)
 library(here)
 library(phytools)
 
-#' Takes a phylogenetic tree and a list of species as input and return a phylogenetic tree with only species present in both 
+#' Takes a phylogenetic tree and a list of species as input and returns a phylogenetic tree with only species present in both species
+#' Writes file containing all species inside tree but NOT in species
 
 main <- function(){
   species <- read.table(here("data", "speciesName_FaName")) #df
@@ -20,8 +21,7 @@ main <- function(){
   rmSp <- setdiff(trSpecies, species[[1]])
   prunedTree <- drop.tip(tree, rmSp)
  
-# # Make file of all both files did not have in common
-  # write.table(rmSp, here("data, nonUnionSpecies_Tree-speciesName_FaName"))
+   write.table(rmSp, here("data, nonUnionSpecies_Tree-speciesName_FaName"))
    cat("numSpecies: ", length(species[[1]]), "numSpecies in tree: ", length(trSpecies), " numSpecies not in both files: ", length(rmSp))
 # 
 #   write.tree(prunedTree, here("data, cleanTree"))

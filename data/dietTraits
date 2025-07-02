@@ -9,6 +9,8 @@ Hydrodamalis gigas	NA
 Loxodonta africana	Herbivore
 Microgale talazaci	Insectivore
 Orycteropus afer afer	Insectivore
+Orycteropus afer afer	Insectivore
+Procavia capensis	Herbivore
 Procavia capensis	Herbivore
 Trichechus manatus latirostris	Herbivore
 Acinonyx jubatus	Vertivore
@@ -18,19 +20,32 @@ Arctocephalus gazella	Insectivore
 Bassariscus sumichrasti	Omnivore
 Callorhinus ursinus	Vertivore
 Canis lupus familiaris	Vertivore
+Canis lupus familiaris	Vertivore
+Canis lupus familiaris	Vertivore
+Canis lupus familiaris	Vertivore
+Canis lupus familiaris	Vertivore
+Canis lupus familiaris	Vertivore
+Canis lupus familiaris	Vertivore
+Canis lupus familiaris	Vertivore
+Canis lupus familiaris	Vertivore
+Canis lupus familiaris	Vertivore
+Crocuta crocuta	Vertivore
 Crocuta crocuta	Vertivore
 Cryptoprocta ferox	Vertivore
 Erignathus barbatus	Omnivore
 Eumetopias jubatus	Vertivore
 Felis catus	Vertivore
 Felis nigripes	Vertivore
+Felis nigripes	Vertivore
 Gulo gulo	Omnivore
 Halichoerus grypus	Vertivore
 Helogale parvula	Insectivore
 Hyaena hyaena	Vertivore
 Leptonychotes weddellii	Vertivore
+Leptonychotes weddellii	Vertivore
 Lontra canadensis	Vertivore
 Lutra lutra	Vertivore
+Lycaon pictus	Vertivore
 Lycaon pictus	Vertivore
 Lynx canadensis	Vertivore
 Lynx pardinus	Vertivore
@@ -48,6 +63,7 @@ Neovison vison	Vertivore
 Odobenus rosmarus	Insectivore
 Panthera leo	Vertivore
 Panthera onca	Vertivore
+Panthera onca	Vertivore
 Panthera pardus	Vertivore
 Paradoxurus hermaphroditus	Omnivore
 Phoca vitulina	Vertivore
@@ -55,21 +71,28 @@ Potos flavus	Omnivore
 Prionailurus bengalensis euptilurus	Vertivore
 Procyon lotor	Omnivore
 Pteronura brasiliensis	Vertivore
+Pteronura brasiliensis	Vertivore
 Puma concolor	Vertivore
 Puma yagouaroundi	Vertivore
 Spilogale gracilis	Omnivore
 Suricata suricatta	Insectivore
+Suricata suricatta	Insectivore
 Taxidea taxus jeffersonii	Vertivore
+Ursus americanus	Omnivore
+Ursus americanus	Omnivore
+Ursus americanus	Omnivore
 Ursus americanus	Omnivore
 Ursus arctos horribilis	Omnivore
 Ursus maritimus	Vertivore
 Ursus thibetanus thibetanus	Omnivore
 Vulpes lagopus	Vertivore
 Vulpes vulpes	Vertivore
+Vulpes vulpes	Vertivore
 Zalophus californianus	Vertivore
 Aeorestes cinereus	NA
 Anoura caudifer	Omnivore
 Antrozous pallidus	Insectivore
+Artibeus jamaicensis	Herbivore
 Artibeus jamaicensis	Herbivore
 Carollia perspicillata	Herbivore
 Craseonycteris thonglongyai	Insectivore
@@ -77,6 +100,7 @@ Cynopterus brachyotis	Herbivore
 Eidolon dupreanum	Herbivore
 Eidolon helvum	Herbivore
 Eonycteris spelaea	Herbivore
+Eptesicus fuscus	Insectivore
 Eptesicus fuscus	Insectivore
 Hipposideros armiger	Insectivore
 Hipposideros galeritus	Insectivore
@@ -94,12 +118,14 @@ Murina aurata feae	Insectivore
 Myotis brandtii	Insectivore
 Myotis davidii	Insectivore
 Myotis lucifugus	Insectivore
+Myotis lucifugus	Insectivore
 Myotis myotis	Insectivore
 Myotis septentrionalis	Insectivore
 Noctilio leporinus	Vertivore
 Nycticeius humeralis	Insectivore
 Phyllostomus discolor	Omnivore
 Pipistrellus kuhlii	Insectivore
+Pipistrellus pipistrellus	Insectivore
 Pipistrellus pipistrellus	Insectivore
 Pteronotus parnellii	Insectivore
 Pteropus alecto	Herbivore
@@ -127,14 +153,17 @@ Lepus americanus	Herbivore
 Lepus timidus	Herbivore
 Ochotona princeps	Herbivore
 Oryctolagus cuniculus	Herbivore
+Oryctolagus cuniculus	Herbivore
 Sylvilagus bachmani	Herbivore
 Antechinus flavipes	Insectivore
 Didelphis virginiana	Omnivore
 Gracilinanus agilis	Omnivore
 Gymnobelideus leadbeateri	Omnivore
+Gymnobelideus leadbeateri	Omnivore
 Macropus fuliginosus	Herbivore
 Macropus giganteus	Herbivore
 Monodelphis domestica	Omnivore
+Notamacropus eugenii	NA
 Notamacropus eugenii	NA
 Osphranter rufus	NA
 Phalanger gymnotis	Herbivore
@@ -145,7 +174,9 @@ Pseudochirops cupreus	Herbivore
 Sarcophilus harrisii	Omnivore
 Thylacinus cynocephalus	NA
 Trichosurus vulpecula	Herbivore
+Trichosurus vulpecula	Herbivore
 Vombatus ursinus	Herbivore
+Ceratotherium simum cottoni	NA
 Ceratotherium simum cottoni	NA
 Diceros bicornis	Herbivore
 Equus asinus	Herbivore
@@ -154,8 +185,12 @@ Equus caballus	Herbivore
 Equus przewalskii	NA
 Rhinoceros unicornis	Herbivore
 Tapirus indicus	Herbivore
+Tapirus indicus	Herbivore
+Tapirus terrestris	Herbivore
 Tapirus terrestris	Herbivore
 Manis javanica	Insectivore
+Manis javanica	Insectivore
+Manis pentadactyla	Insectivore
 Manis pentadactyla	Insectivore
 Manis tricuspis	Insectivore
 Phataginus tricuspis	NA
@@ -175,6 +210,7 @@ Chlorocebus sabaeus	Omnivore
 Daubentonia madagascariensis	Omnivore
 Erythrocebus patas	Herbivore
 Eulemur flavifrons	Omnivore
+Eulemur flavifrons	Omnivore
 Eulemur fulvus	Herbivore
 Eulemur macaco	Herbivore
 Eulemur mongoz	Herbivore
@@ -182,11 +218,13 @@ Gorilla gorilla	Herbivore
 Hylobates moloch	Herbivore
 Indri indri	Herbivore
 Lemur catta	Herbivore
+Lemur catta	Herbivore
 Macaca fascicularis	Omnivore
 Macaca fuscata	Herbivore
 Macaca mulatta	Herbivore
 Macaca nemestrina	Herbivore
 Mandrillus leucophaeus	Omnivore
+Mandrillus sphinx	Omnivore
 Mandrillus sphinx	Omnivore
 Microcebus murinus	Omnivore
 Microcebus sp. 3 GT-2019	NA
@@ -198,13 +236,17 @@ Nomascus leucogenys	Herbivore
 Nycticebus coucang	Omnivore
 Otolemur garnettii	Omnivore
 Pan paniscus	Herbivore
+Pan paniscus	Herbivore
+Pan troglodytes	Herbivore
 Pan troglodytes	Herbivore
 Papio anubis	Omnivore
 Piliocolobus tephrosceles	Herbivore
 Pithecia pithecia	Omnivore
 Plecturocebus donacophilus	NA
 Pongo abelii	Omnivore
+Pongo abelii	Omnivore
 Prolemur simus	Herbivore
+Propithecus coquereli	Herbivore
 Propithecus coquereli	Herbivore
 Pygathrix nemaeus	Herbivore
 Rhinopithecus bieti	Herbivore
@@ -216,12 +258,16 @@ Semnopithecus entellus	Herbivore
 Theropithecus gelada	Herbivore
 Trachypithecus francoisi	Herbivore
 Ornithorhynchus anatinus	Insectivore
+Ornithorhynchus anatinus	Insectivore
 Tachyglossus aculeatus	Insectivore
+Tachyglossus aculeatus	Insectivore
+Acomys cahirinus	Omnivore
 Acomys cahirinus	Omnivore
 Acomys russatus	Omnivore
 Allactaga bullata	Omnivore
 Aplodontia rufa	Herbivore
 Apodemus sylvaticus	Omnivore
+Arvicanthis niloticus	Herbivore
 Arvicanthis niloticus	Herbivore
 Arvicola amphibius	Herbivore
 Castor canadensis	Herbivore
@@ -243,21 +289,30 @@ Dolichotis patagonum	Herbivore
 Ellobius lutescens	Herbivore
 Ellobius talpinus	Herbivore
 Erethizon dorsatum	Herbivore
+Erethizon dorsatum	Herbivore
 Fukomys damarensis	NA
 Glis glis	Herbivore
 Grammomys surdaster	NA
 Graphiurus murinus	Omnivore
 Heterocephalus glaber	Herbivore
+Heterocephalus glaber	Herbivore
+Hydrochoerus hydrochaeris	Herbivore
 Hydrochoerus hydrochaeris	Herbivore
 Hystrix cristata	Herbivore
+Ictidomys tridecemlineatus	NA
 Ictidomys tridecemlineatus	NA
 Jaculus jaculus	Herbivore
 Marmota flaviventris	Herbivore
 Marmota himalayana	Herbivore
 Marmota monax	Herbivore
+Marmota monax	Herbivore
+Marmota monax	Herbivore
+Marmota monax	Herbivore
 Marmota vancouverensis	Herbivore
 Mastomys coucha	Omnivore
 Meriones unguiculatus	Omnivore
+Mesocricetus auratus	Herbivore
+Mesocricetus auratus	Herbivore
 Mesocricetus auratus	Herbivore
 Microtus agrestis	Herbivore
 Microtus arvalis	Herbivore
@@ -265,6 +320,7 @@ Microtus fortis	Herbivore
 Microtus ochrogaster	Herbivore
 Microtus oeconomus	Herbivore
 Mus caroli	Omnivore
+Mus musculus	Omnivore
 Mus musculus	Omnivore
 Mus pahari	Omnivore
 Mus spicilegus	Omnivore
@@ -286,6 +342,8 @@ Peromyscus nasutus	Omnivore
 Peromyscus polionotus subgriseus	Omnivore
 Petromus typicus	Herbivore
 Psammomys obesus	Herbivore
+Rattus norvegicus	Omnivore
+Rattus norvegicus	Omnivore
 Rattus norvegicus	Omnivore
 Rattus rattus	Omnivore
 Rhizomys pruinosus	Herbivore
@@ -325,9 +383,13 @@ Damaliscus lunatus	Herbivore
 Elaphurus davidianus	Herbivore
 Eudorcas thomsonii	Herbivore
 Giraffa camelopardalis	Herbivore
+Giraffa camelopardalis	Herbivore
+Giraffa camelopardalis	Herbivore
+Giraffa camelopardalis	Herbivore
 Giraffa tippelskirchi	NA
 Hemitragus hylocrius	Herbivore
 Hippotragus equinus	Herbivore
+Hippotragus niger niger	Herbivore
 Hippotragus niger niger	Herbivore
 Hydropotes inermis	Herbivore
 Kobus ellipsiprymnus	Herbivore
@@ -344,6 +406,7 @@ Nanger granti	Herbivore
 Neotragus moschatus	Herbivore
 Neotragus pygmaeus	Herbivore
 Odocoileus hemionus hemionus	Herbivore
+Odocoileus virginianus	Herbivore
 Odocoileus virginianus	Herbivore
 Okapia johnstoni	Herbivore
 Oreamnos americanus	Herbivore
@@ -376,44 +439,71 @@ Catagonus wagneri	Herbivore
 Sus scrofa	Omnivore
 Camelus bactrianus	Herbivore
 Camelus dromedarius	Herbivore
+Camelus dromedarius	Herbivore
 Camelus ferus	NA
 Lama glama	Herbivore
 Lama glama chaku	NA
 Lama guanicoe cacsilensis	NA
+Vicugna pacos	NA
 Vicugna pacos	NA
 Vicugna vicugna mensalis	Herbivore
 Balaena mysticetus	Insectivore
 Balaenoptera bonaerensis	Insectivore
 Balaenoptera edeni	Omnivore
 Balaenoptera musculus	Insectivore
+Balaenoptera musculus	Insectivore
+Balaenoptera musculus	Insectivore
+Balaenoptera musculus	Insectivore
 Balaenoptera physalus	Insectivore
 Delphinapterus leucas	Vertivore
+Delphinapterus leucas	Vertivore
+Eschrichtius robustus	Insectivore
 Eschrichtius robustus	Insectivore
 Eubalaena glacialis	Insectivore
 Eubalaena japonica	Insectivore
 Globicephala melas	Insectivore
+Globicephala melas	Insectivore
+Hippopotamus amphibius	Herbivore
+Hippopotamus amphibius	Herbivore
+Hippopotamus amphibius	Herbivore
 Hippopotamus amphibius	Herbivore
 Inia geoffrensis	Vertivore
 Kogia breviceps	Insectivore
 Lagenorhynchus obliquidens	Vertivore
+Lagenorhynchus obliquidens	Vertivore
 Lipotes vexillifer	Vertivore
+Megaptera novaeangliae	Insectivore
 Megaptera novaeangliae	Insectivore
 Mesoplodon bidens	Insectivore
 Monodon monoceros	Vertivore
 Orcinus orca	Vertivore
 Peponocephala electra	Vertivore
 Phocoena phocoena	Vertivore
+Phocoena phocoena	Vertivore
 Phocoena sinus	Vertivore
+Phocoena sinus	Vertivore
+Physeter catodon	Insectivore
+Physeter catodon	Insectivore
+Physeter catodon	Insectivore
 Physeter catodon	Insectivore
 Platanista minor	Omnivore
 Pontoporia blainvillei	Vertivore
 Sousa chinensis	Vertivore
 Tursiops aduncus	Vertivore
+Tursiops aduncus	Vertivore
+Tursiops aduncus	Vertivore
+Tursiops aduncus	Vertivore
+Tursiops truncatus	Vertivore
+Tursiops truncatus	Vertivore
 Tursiops truncatus	Vertivore
 Ziphius cavirostris	Insectivore
+Choloepus didactylus	Omnivore
+Choloepus didactylus	Omnivore
+Choloepus didactylus	Omnivore
 Choloepus didactylus	Omnivore
 Choloepus hoffmanni	Herbivore
 Dasypus novemcinctus	Insectivore
 Myrmecophaga tridactyla	Insectivore
+Tamandua tetradactyla	Insectivore
 Tamandua tetradactyla	Insectivore
 Tolypeutes matacus	Omnivore
