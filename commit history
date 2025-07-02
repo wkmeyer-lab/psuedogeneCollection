@@ -1,0 +1,103 @@
+[33mcommit f2303202e87fc108353ad418838075cff2dd0910[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mv2-dev[m[33m, [m[1;32mdev[m[33m)[m
+Author: Tyler Gruver <tyler.l.gruver@gmail.com>
+Date:   Tue Jul 1 11:38:19 2025 -0400
+
+    preparing to create branch and merge into v2-Dev, forgot to stage file
+
+[33mcommit 797a7aa15b34c42d223764fcf90e17656a42b826[m
+Author: Tyler Gruver <tyler.l.gruver@gmail.com>
+Date:   Tue Jul 1 11:37:35 2025 -0400
+
+    preparing to create branch and merge into v2-Dev
+
+[33mcommit b4fabdc7684d63a0798c27a05008c136b06d6acb[m[33m ([m[1;32mbugfix[m[33m)[m
+Merge: 17a9674 e8892e9
+Author: Tyler Gruver <tyler.l.gruver@gmail.com>
+Date:   Sun Jun 29 21:55:38 2025 -0400
+
+     actually finished cleanLiSpecies, i had left a bug by mistake
+
+[33mcommit e8892e9510c4cc8d29d072015a9465d15eb8a2b0[m
+Author: Tyler Gruver <tyler.l.gruver@gmail.com>
+Date:   Sun Jun 29 21:21:15 2025 -0400
+
+    cleanSpecies works
+
+[33mcommit 17a96746f0acc3e965f46d072b4b9f7aa4748da9[m
+Author: Tyler Gruver <tyler.l.gruver@gmail.com>
+Date:   Fri Jun 27 17:39:48 2025 -0400
+
+    preparing to merge to dev
+
+[33mcommit 396166a67d82035d95195495dd9efdf85495e49e[m[33m ([m[1;32mmaster[m[33m)[m
+Author: Tyler Gruver <tyler.l.gruver@gmail.com>
+Date:   Fri Jun 27 17:23:51 2025 -0400
+
+    preparing to merge into test
+
+[33mcommit cb9360df5a0e579589d022d922f33754732af8da[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: Tyler Gruver <tyler.l.gruver@gmail.com>
+Date:   Mon Jun 16 15:29:41 2025 -0400
+
+    removed lossSumCollection and all subdirectoryiesfrom staging
+
+[33mcommit 9546754e0bf4d3ecc248bb1a2c04a4849a80c7b1[m
+Author: Tyler Gruver <tyler.l.gruver@gmail.com>
+Date:   Mon Jun 16 13:27:05 2025 -0400
+
+    Updated output files
+
+[33mcommit 87128566ed4a3868a9054ae2940a2f573e21dae6[m
+Author: Tyler Gruver <tyler.l.gruver@gmail.com>
+Date:   Mon Jun 16 11:52:25 2025 -0400
+
+    Finished program
+
+[33mcommit 4e994a2795c274f194a2a5d70183d8a431e603ef[m
+Author: Tyler Gruver <tyler.l.gruver@gmail.com>
+Date:   Mon Jun 16 11:35:50 2025 -0400
+
+    generates correct .tsv file w/ GENE ID, SPECIES, and PRESENCE PER GENE OF SPECIES
+
+[33mcommit 533787c2fc8af664d7d9e943f95a10302c80a5b2[m
+Author: Tyler Gruver <tyler.l.gruver@gmail.com>
+Date:   Fri Jun 13 14:54:45 2025 -0400
+
+    bug fixed. Merge works as intended, write to tsv and scale.
+
+[33mcommit 1fac5dbdab96b510dd347a58c0daddf35a46c1db[m
+Author: Tyler Gruver <tyler.l.gruver@gmail.com>
+Date:   Fri Jun 13 14:20:47 2025 -0400
+
+    Saving to prepare to merge
+
+[33mcommit 8dc4fc72e30e0ee1d82ed6d5d03edb3ebf05ae6d[m
+Author: Tyler Gruver <tyler.l.gruver@gmail.com>
+Date:   Thu Jun 12 15:27:07 2025 -0400
+
+     working on matching gene presence with genes per species
+
+[33mcommit ffda02aa2e2e473cef3a01d7359501333b282a36[m
+Merge: 13413d5 6688d2d
+Author: Tyler Gruver <tyler.l.gruver@gmail.com>
+Date:   Wed Jun 11 16:12:48 2025 -0400
+
+    resolving merging conflict
+
+[33mcommit 6688d2d12c5565d479a0c6106e614821dc73db53[m
+Author: Tyler Gruver <tyler.l.gruver@gmail.com>
+Date:   Wed Jun 11 15:55:29 2025 -0400
+
+    genes is now fixed.
+
+[33mcommit 13413d5b8c585601c2362f824a6585ee0f298b93[m
+Author: Tyler Gruver <tyler.l.gruver@gmail.com>
+Date:   Wed Jun 11 15:09:40 2025 -0400
+
+    testing Version Control
+
+[33mcommit 87453a071b141ca729cc0f049e540cbdcaa53a4c[m
+Author: Tyler Gruver <tyler.l.gruver@gmail.com>
+Date:   Wed Jun 11 14:40:40 2025 -0400
+
+    Forgot to commit earlier. Currently testing gene collection. Have not merged yet, genes list contains incorrect elements at this time
