@@ -8,11 +8,18 @@
 library(ape)
 library(here)
 library(phytools)
+library(readr)
 
-
+#' @note 
+  #' 1:) need to clean psuedoGene data for bayestraitsRun
+  #' 2:) need to exclude duplicates from allSpecies
+        #' Identify duplicates by matching nonUnion with scientific_full_fa
+        #' Delete all duplicates duplicates   
+  #' 3:) ensure that files I am writing into do not contain duplicates 
 main <- function(){
   # Creating trait file, preparing to process tree
   
+  dirtyPsuedo <- read.table(here("data", "psuedo.tsv"))
   dirtySpDi <- read.csv(here("data", "mergedData.csv")) #contains species diet info
   allSp <- read.table(here("data", "ListOfSpecies"))[,1] # 1 species/row --> n elements in list
   
@@ -21,21 +28,9 @@ main <- function(){
   fullSpNames <- allSp[cleanLiSpecies$index]
   faNames <- nameToTreeName(fullSpNames) 
   scientific_full_fa <- data.frame(scientific = cleanLiSpecies$sp, full = fullSpNames, fa = faNames)
-  dirty_Spec_diet <- dirtySpDi[, c(3, length(dirtySpDi))] #grab scientific name, diet
-  Spec_Diet <- mapSpeciesToSomething(cleanLiSpecies$sp, dirty_Spec_diet) # for writing dietTraits
+  
 
-  
-  #for use in treeCleaner: Pruning tree + use to keep track of what species from tree wasn't on this
-  save_tsv(scientific_full_fa, "allNames")
-  
-  
-  #for use in Bayestraits script
-  save_tsv(Spec_Diet, "dietTraits")
-  
-  
-  #' --------------------------------------------------------------------------
-  #' Updating Tree
-
+# need tree to determine what duplicate species gene assemblies need to be removed  
   
   tree <- read.tree(here("data","AllSpeciesMasterTree.tre"))
   #' obj composed of:
@@ -49,16 +44,56 @@ main <- function(){
   notInCommon <- scientific_full_fa[indiciesNOTSame, ]
   prunedTree <- drop.tip(tree, notInCommon$fa)
   
-  save_tsv(notInCommon, "nonUnionSpecies_Tree__allNames" )
-  write.tree(prunedTree, here("data", "cleanTree"))
+ # browser()
+  scientific_full_fa <- rmDupe(scientific_full_fa, trSpecies)
   
-  cat("numSpecies: ", length(scientific_full_fa$fa), "numSpecies in tree: ", length(trSpecies), " numSpecies not in both files: ", length(notInCommon$fa))
+  dirty_Spec_diet <- dirtySpDi[, c(3, length(dirtySpDi))] #grab scientific name, diet
+  Spec_Diet <- mapSpeciesToSomething(scientific_full_fa$scientific, dirty_Spec_diet)
+  
+  cleanPsuedo <- cleanPsuedoData(dirtyPsuedo, fullSpNames) 
+  
+  #for use in Bayestraits script
+  write_tsv(cleanPsuedo, here("data", "cleanPsuedo.tsv")) 
+  
+  #for use in Bayestraits script
+  save_tsv(scientific_full_fa, "allNames") 
 
+  #for use in Bayestraits script 
+  save_tsv(Spec_Diet, "dietTraits") # WORKS
+
+  #for documentation and testing  
+  save_tsv(notInCommon, "nonUnionSpecies_Tree__allNames" ) #IDK
+  
+  #for use in Bayestraits script
+  write.tree(prunedTree, here("data", "cleanTree")) #IDK
+  
 }
 
 #' @method to automatically write tsv, saves time...
 save_tsv <- function(obj, filename) {
   write.table(obj, here("data", filename), sep = "\t", row.names = FALSE, quote = FALSE)
+}
+#' @method removes duplicates from psu. 
+#' @param psu dataframe containg GENE PRESENCE per species for GENE ID
+#' @param fullSp character vector containing all species to keep in psu
+ cleanPsuedoData<- function(psu, fullSp){
+   indices <- which(psu[1,] %in% fullSp)
+  #' I want to only keep cols that have the given indices
+  #' AKA if not a index, nuke given col
+  return( psu[, indices] )
+   
+ }
+#' @method to exclude low quality gene assemblies that have identical scientific names. Include only those found in tree
+#' @param scientific_full_fa data frame to obtain duplicates from
+#' @param trSpecies character vector to determine what duplicates exist
+#' @return data frame containing no duplicates
+
+rmDupe <- function(scientific_full_fa, trSpecies){
+  sciNames <- scientific_full_fa$scientific
+  allDuplicates<- scientific_full_fa[duplicated(sciNames) | duplicated(sciNames, fromLast=TRUE), ] # grab "duplicate species to inspect later
+  badSpecies <- allDuplicates[!(allDuplicates$fa %in% trSpecies), ]
+  clean_Sci_Full_Fa<- scientific_full_fa[!(scientific_full_fa$fa %in% badSpecies$fa), ]
+  return (clean_Sci_Full_Fa)
 }
 
 #' @method to take convert naming convention to tree naming convention

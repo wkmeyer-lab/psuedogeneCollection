@@ -2,7 +2,7 @@
 #run test on console
 library(here)
 library(testthat)
-source(here( "src","dietTraitGetter.R" ))
+source(here( "src","preprocessing.R" ))
 
 #' @method to take vector and dataframe, and grab each row where elements in vector match the nth row, first col of dataframe
 #' @param clean_sp contains species list to grab
@@ -23,7 +23,7 @@ test_that( " mapSpeciesToDiet maps Species from clean_sp to diet of same Species
    
    #stupid row names are fucking things up --> so i will remove names... dont need or care for naming of dataframe... 
    
-   actualOutput <- mapSpeciesToDiet(clean_sp, dirty_sp_di) 
+   actualOutput <- mapSpeciesToSomething(clean_sp, dirty_sp_di) 
    rownames(actualOutput) <- NULL
    rownames(expectedOutput) <- NULL
    
