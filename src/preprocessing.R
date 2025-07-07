@@ -18,7 +18,7 @@ library(readr)
   #' 3:) ensure that files I am writing into do not contain duplicates 
 main <- function(){
   # Creating trait file, preparing to process tree
-  
+  browser()
   dirtyPsuedo <- read.table(here("data", "psuedo.tsv"))
   dirtySpDi <- read.csv(here("data", "mergedData.csv")) #contains species diet info
   allSp <- read.table(here("data", "ListOfSpecies"))[,1] # 1 species/row --> n elements in list
