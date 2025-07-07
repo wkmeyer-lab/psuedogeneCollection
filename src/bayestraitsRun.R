@@ -1,59 +1,67 @@
 
 
 library(here)
- 
+library(readr)
+
 #' ISSUES TO ADDRESS:
 #' 1.) need to merge diet to binary values
 #' 2.) AM NOT IGNORING DUPE PATTERNS!!!
 
 main <- function() {
-  
-  independent <- read.table(here("data", "bt_indep")) #need to make
-  dependent <- read.table(here("data", "bt_dep")) #need to make
-  
+  browser()
+
   gene_sp <- read.table(here("data", "cleanPsuedo.tsv"))
   #' Format: DATA FRAME
     #'        Species: ... 
     #' GENEID: PRESENCE...
     #'  ...      ...  
-    
-  sci_full_fa <- read.table(here("data", "allNames"))
+
+ sci_full_fa <- read_tsv(here("data", "allNames"), show_col_types = FALSE)
   #' Format: CHARACTER VECTOR
   #'  Sci  Full  Fa  || 
   #'  ...  ...  ... 
-  
-  diet_sp <- read.table(here("data", "dietTraits.txt"))
+
+ diet_sp <- read_tsv(here("data", "dietTraits"), show_col_types = FALSE)
   #' Format:  # DATA FRAME
     #' Species:     Diet: 
     #'   ...         ...
     #'   
   
-  tree <- read.table(here("data", "cleanTree.tree")) 
+  tree <- read.table(here("data", "cleanTree")) 
   
   
   # Processing Species Data
   sp <- sci_full_fa$full
-  numSp <- length(sp)
+  numSp <- length(sp) # need for  ??
+  
+  #' verify assumptions here
+  #' check to see if i can align species against diet_species and cleanPseudo
+  #' how can i check and see if two entire cols are the same?
   
   #' Processing gene data
-  genePattern <- gene_sp[-1, 2:length(gene_sp)]
+  genePattern <- unique(gene_sp[, 2:length(gene_sp)])
   geneID <- gene_sp[, 1]
-  pattern_ID <- data.frame(id = geneID, pattern = genePattern)
+  
   
   n1_PerGeneID <- sum(pattern_ID$pattern == "1")
+  browser()
+  #THIS NEEDS WORK 
   uniquePatterns <- length(unique(pattern_ID$id))
+  cat("Num Patterns: ", uniquePatterns)
 
   # Creating bayestraits file:
-  for( i in pattern_ID$id){
+  for( i in genePattern){
     input <- data.frame(
       species = sp,
       trait = diet_trait[,2],
-      presence = pattern_ID$pattern[i]
+      presence = genePattern[i]
     )
-    # write as input for bayestraits
-  }
+    write.table(input, here("data", "inputBayes"))
+    }
   
-  system("path/to/bayestraits input tree")
+  system(paste("BayesTraitsV3.exe data/inputBayes.txt data/cleanTree.tree < data/bt_indep"))
   
   #trim output
-  }
+}
+
+main()

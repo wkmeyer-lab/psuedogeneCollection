@@ -24,7 +24,7 @@ main <- function(){
   allSp <- read.table(here("data", "ListOfSpecies"))[,1] # 1 species/row --> n elements in list
   
   species <- dirtySpDi[,3] # obtains scientific name
-  cleanLiSpecies <- cleanSpecies(species, allSp) # remove unnecessary species
+  cleanLiSpecies <- cleanSpecies(species, allSp) # remove unnecessary species, keep dupe
   fullSpNames <- allSp[cleanLiSpecies$index]
   faNames <- nameToTreeName(fullSpNames) 
   scientific_full_fa <- data.frame(scientific = cleanLiSpecies$sp, full = fullSpNames, fa = faNames)
@@ -50,7 +50,7 @@ main <- function(){
   dirty_Spec_diet <- dirtySpDi[, c(3, length(dirtySpDi))] #grab scientific name, diet
   Spec_Diet <- mapSpeciesToSomething(scientific_full_fa$scientific, dirty_Spec_diet)
   
-  cleanPsuedo <- cleanPsuedoData(dirtyPsuedo, fullSpNames) 
+  cleanPsuedo <- cleanPsuedoData(dirtyPsuedo, scientific_full_fa$full) 
   
   #for use in Bayestraits script
   write_tsv(cleanPsuedo, here("data", "cleanPsuedo.tsv")) 
@@ -78,9 +78,13 @@ save_tsv <- function(obj, filename) {
 #' @param fullSp character vector containing all species to keep in psu
  cleanPsuedoData<- function(psu, fullSp){
    indices <- which(psu[1,] %in% fullSp)
-  #' I want to only keep cols that have the given indices
-  #' AKA if not a index, nuke given col
-  return( psu[, indices] )
+   cleanPSU <-psu[, c(1, indices)]
+   
+   # full --> scientific name
+   sciNames<- truncateSp(cleanPSU[ 1,])
+   cleanPSU[1,] <- sciNames
+   
+   return(  cleanPSU )
    
  }
 #' @method to exclude low quality gene assemblies that have identical scientific names. Include only those found in tree
@@ -139,7 +143,7 @@ nameToTreeName <- function(sp){
    }
 
   sameSpecies = data.frame(sp = sp, index = indexes)
-   return(sameSpecies)
+   return(sameSpecies) 
    
  }
 #' @Method to keep only scientific name, remove '_' and replace w space
