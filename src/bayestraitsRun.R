@@ -8,9 +8,7 @@ library(readr)
 #' 2.) AM NOT IGNORING DUPE PATTERNS!!!
 
 main <- function() {
-  browser()
-
-  gene_sp <- read.table(here("data", "cleanPsuedo.tsv"))
+  gene_sp <- read_tsv(here("data", "cleanPsuedo.tsv"))
   #' Format: DATA FRAME
     #'        Species: ... 
     #' GENEID: PRESENCE...
@@ -39,21 +37,19 @@ main <- function() {
   #' how can i check and see if two entire cols are the same?
   
   #' Processing gene data
-  genePattern <- unique(gene_sp[, 2:length(gene_sp)])
+  genePattern <- unique(gene_sp[-1, 2:length(gene_sp)])
   geneID <- gene_sp[, 1]
-  
-  
-  n1_PerGeneID <- sum(pattern_ID$pattern == "1")
-  browser()
-  #THIS NEEDS WORK 
-  uniquePatterns <- length(unique(pattern_ID$id))
-  cat("Num Patterns: ", uniquePatterns)
+  n1_PerGeneID <- sum(genePattern == "1") #do i need this?
 
+  cat("Num Patterns: ", length(genePattern))
+
+  browser()
+  
   # Creating bayestraits file:
   for( i in genePattern){
     input <- data.frame(
       species = sp,
-      trait = diet_trait[,2],
+      trait = diet_sp[,2],
       presence = genePattern[i]
     )
     write.table(input, here("data", "inputBayes"))
