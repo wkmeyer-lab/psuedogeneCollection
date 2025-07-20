@@ -11,20 +11,20 @@ library(phytools)
 library(readr)
 
 #' @note
-  #' Issue: fa_fullS_scientific contains NA diet names
   #' test for: cleanSpecies
             #' 
 main <- function(){
+
   # Creating trait file, preparing to process tree
-  dirtyPsuedo <- read.table(here("data", "psuedo.tsv"))
+  dirtyPsuedo <- read_tsv(here("data", "psuedo.tsv"))
   dirtySpDi <- read.csv(here("data", "mergedData.csv")) #contains species diet info
   allSp <- read.table(here("data", "ListOfSpecies"))[,1] # 1 species/row --> n elements in list
   faNames_diet <-cleanFa(dirtySpDi$manualAnnotations_FaName, dirtySpDi$ZoonomiaTip)
   fa_full_scientific_union <- cleanSpecies(faNames_diet, allSp, dirtySpDi[,length(dirtySpDi)]) 
   Spec_Diet <- data.frame(species = fa_full_scientific_union$scientific, diet = fa_full_scientific_union$diet)
-  
-  as <- data.frame(i = allSp)
-  s <- data.frame( i = faNames_diet)
+  # 
+  # as <- data.frame(i = allSp)
+  # s <- data.frame( i = faNames_diet)
   
   tree <- read.tree(here("data","AllSpeciesMasterTree.tre"))
   #' obj composed of:
@@ -34,11 +34,10 @@ main <- function(){
     #' Nnode: Int = internal node count 
   
   prunedTree <- prune_tree_to_union(tree, fa_full_scientific_union$fa)
-  fa_full_scientific_union <- rmDupe(fa_full_scientific_union, prunedTree$tip.lable)
+  fa_full_scientific_union <- fa_full_scientific_union[fa_full_scientific_union$fa %in% prunedTree$tip.label,]
   cleanPsuedo <- cleanPsuedoData(dirtyPsuedo, fa_full_scientific_union$full) 
   
   
-  browser()
   #for use in Bayestraits script
   write_tsv(cleanPsuedo, here("data", "cleanPsuedo.tsv")) 
   
@@ -46,7 +45,7 @@ main <- function(){
   save_tsv(fa_full_scientific_union, "allNames") 
 
   #for use in Bayestraits script 
-  save_tsv(Spec_Diet, "dietTraits") # WORKS
+  save_tsv(Spec_Diet, "dietTraits") 
 
   
   #for use in Bayestraits script
@@ -59,14 +58,15 @@ save_tsv <- function(obj, filename) {
   write.table(obj, here("data", filename), sep = "\t", row.names = FALSE, quote = FALSE)
 }
 
+
 #'@method Prune a tree by removing species not in union
 #' @param tree The phylogenetic tree object
-#' @param union_df Dataframe with a $fa column (species to keep)
-#' @return List with pruned tree, non-matching species, and indices
+#' @param fa vector with fa names (species to keep)
+#' @return pruned tree, non-matching species are listed
 prune_tree_to_union <- function(tree, fa) {
   trSpecies <- tree$tip.label
   indiciesNOTSame <- which(!(trSpecies %in% fa))
-  notInCommon <- fa[indiciesNOTSame]
+  notInCommon <- trSpecies[indiciesNOTSame]
   prunedTree <- drop.tip(tree, notInCommon)
   
   #for documentation and testing  
@@ -98,13 +98,13 @@ prune_tree_to_union <- function(tree, fa) {
  }
  
 #' @method to exclude low quality gene assemblies that have identical scientific names. Include only those found in tree
-#' @param scientific_full_fa data frame to obtain duplicates from
+#' @param fa_full_sci_union data frame that contains lesser quality genome assemblies 
 #' @param trSpecies character vector to determine what duplicates exist
 #' @return data frame containing no duplicates
 
-rmDupe <- function(scientific_full_fa, trSpecies){
-  sciNames <- scientific_full_fa$scientific
-  allDuplicates<- scientific_full_fa[duplicated(sciNames) | duplicated(sciNames, fromLast=TRUE), ] # grab "duplicate species to inspect later
+ rmBadAssem <- function(fa_full_sci_union, trSpecies){
+   sciNames <- scientific_full_fa$scientific
+  allDuplicates<- scientific_full_fa[duplicated(sciNames) | duplicated(sciNames, fromLast=TRUE), ] # grab duplicate species to inspect later
   badSpecies <- allDuplicates[!(allDuplicates$fa %in% trSpecies), ]
   clean_Sci_Full_Fa<- scientific_full_fa[!(scientific_full_fa$fa %in% badSpecies$fa), ]
   return (clean_Sci_Full_Fa)

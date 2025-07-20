@@ -114,7 +114,7 @@ for (i in seq_along(sg)) { #iterate every even index in sg (AKA every key)
       "UL" = 1,
       "PI" = 1,
        "L" = 0,
-      "M" = NA,
+      "M" = "UN",
       "PM" = "UN",
       "PG" = "UN",
       "UN"  # default is NA if unmatched or NULL
