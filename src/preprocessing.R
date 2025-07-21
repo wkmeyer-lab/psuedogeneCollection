@@ -21,12 +21,14 @@ main <- function(){
   allSp <- read.table(here("data", "ListOfSpecies"))[,1] # 1 species/row --> n elements in list
   faNames_diet <-cleanFa(dirtySpDi$manualAnnotations_FaName, dirtySpDi$ZoonomiaTip)
   fa_full_scientific_union <- cleanSpecies(faNames_diet, allSp, dirtySpDi[,length(dirtySpDi)]) 
-  Spec_Diet <- data.frame(species = fa_full_scientific_union$scientific, diet = fa_full_scientific_union$diet)
+
   # 
   # as <- data.frame(i = allSp)
   # s <- data.frame( i = faNames_diet)
-  
+
   tree <- read.tree(here("data","AllSpeciesMasterTree.tre"))
+  #tree <- read.nexus(here("data","AllSpeciesMasterTree.tre")) #doesnt work
+  
   #' obj composed of:
     #' edge: matrix = connections between species
     #' tip.label: chr vector = species
@@ -35,7 +37,9 @@ main <- function(){
   
   prunedTree <- prune_tree_to_union(tree, fa_full_scientific_union$fa)
   fa_full_scientific_union <- fa_full_scientific_union[fa_full_scientific_union$fa %in% prunedTree$tip.label,]
-  cleanPsuedo <- cleanPsuedoData(dirtyPsuedo, fa_full_scientific_union$full) 
+  Spec_Diet <- data.frame(species = fa_full_scientific_union$scientific, diet = fa_full_scientific_union$diet)  
+
+  cleanPsuedo <- cleanPsuedoData(dirtyPsuedo, fa_full_scientific_union$full)
   
   
   #for use in Bayestraits script
@@ -49,7 +53,8 @@ main <- function(){
 
   
   #for use in Bayestraits script
-  write.tree(prunedTree, here("data", "cleanTree")) 
+  #write.tree(prunedTree, here("data", "cleanTree"))  #ISSUE! NEED NEXUS 
+  write.nexus(prunedTree, here("data", "cleanTree.nex"))
   
 }
 
@@ -74,17 +79,14 @@ prune_tree_to_union <- function(tree, fa) {
   return(prunedTree)
 }
 
-#' @method removes duplicates from psu. 
+#' @method removes unneccessary species from psu. 
 #' @param psu dataframe containg GENE PRESENCE per species for GENE ID
 #' @param fullSp character vector containing all species to keep in psu
  cleanPsuedoData<- function(psu, fullSp){
-   indices <- which(psu[1,] %in% fullSp)
+   indices <- which(sapply(strsplit(colnames(psu), " "), tail,1) %in% fullSp) #lol hard to read one liner much?
    cleanPSU <-psu[, c(1, indices)]
-   
-   # full --> scientific name
-   sciNames<- truncateSp(cleanPSU[ 1,])
-   cleanPSU[1,] <- sciNames
-   
+   colnames(cleanPSU) <-  sapply(strsplit(colnames(cleanPSU), " "), tail,1) 
+     
    return(  cleanPSU )
    
  }

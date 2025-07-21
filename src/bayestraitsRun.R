@@ -5,7 +5,7 @@ library(readr)
 
 #' ISSUES TO ADDRESS:
 #' 1.) need to merge diet to binary values
-#' 2.) AM NOT IGNORING DUPE PATTERNS!!!
+
 
 main <- function() {
   gene_sp <- read_tsv(here("data", "cleanPsuedo.tsv"))
@@ -24,53 +24,43 @@ main <- function() {
     #' Species:     Diet: 
     #'   ...         ...
     #'   
+ tree <- read.nexus(here("data", "cleanTree")) 
+  # tree <- read.tree(here("data", "cleanTree")) 
   
-  tree <- read.table(here("data", "cleanTree")) 
+  #' Need to ensure species are sorted the SAME across gene_sp, sci_full_fa, diet_sp
+  nogeneID_sp <- gene_sp[,-1] #to remove "species" col name, will mess up alignment by 1 otherwise
+  gene_sp_aligned <- nogeneID_sp[, order(colnames(nogeneID_sp))] # full, does not contain geneID
+  s_f_fa_aligned <- sci_full_fa[order(sci_full_fa$full), ] # full 
+  diet_sp_aligned <- diet_sp[order(diet_sp$species), ] # scientific
+  sp <- s_f_fa_aligned$full
   
 
-  
-  #' verify assumptions here
-  #' check to see if i can align species against diet_species and cleanPseudo
-  #' how can i check and see if two entire cols are the same?
-  
   #' Processing gene data
-  genePat <- gene_sp[-1, 2:length(gene_sp)]
-  uniqueGenePat <- unique(genePat)
-  geneID <- gene_sp[1 , ]
+  uniqueGenePat <- unique(gene_sp_aligned) 
+  geneID <- gene_sp[,1] 
   n1_PerGeneID <- sum(uniqueGenePat == "1") #do i need this?
-
+  
   cat("Num Patterns: ", length(uniqueGenePat))
-
-  browser()
-  
-  #' Aligning uniqueGenePat species against diet_sp and sci_full_fa
-  uniquePatternIndicies<- which(genePat %in% uniqueGenePat)
-  diet_sp_aligned = diet_sp[uniquePatternIndicies,]
-  sci_full_fa_aligned = sci_full_fa[uniquePatternIndicies, ]
-  gene_sp
-
-  # Processing Species Data
-  sp <- sci_full_fa_aligned$full
-  numSp <- length(sp) # need for  ??
-    
-  
-  
-  browser()
   
   # Creating bayestraits file:
-  index = 0
-  for( i in uniqueGenePat){
-    index = index + 1
+  for( i in 1:nrow(uniqueGenePat)){
+    current_pattern <- as.character(uniqueGenePat[i, ]) # need to convert from data frame to char vector
+    
+    # Create data frame with proper alignment
     input <- data.frame(
-      species = sp,
-      trait = diet_sp_aligned[,2],
-      presence = uniqueGenePat[index]
-      
+      species = sp,                          
+      trait = diet_sp_aligned[,2],          
+      presence = current_pattern, 
+      stringsAsFactors = FALSE
     )
     write.table(input, here("data", "inputBayes.txt"))
-    output <- system(paste("BayesTraitsV3.exe data/inputBayes.txt data/cleanTree.tree < data/bt_indep"))
+    browser()
+    output <- system(paste("BayesTraitsV3.exe data/cleanTree data/inputBayes.txt"))
+    
+    
+    # output <- system(paste("BayesTraitsV3.exe data/cleanTree.tree data/inputBayes.txt < data/bt_indep"))
     }
-  
+  #BayesTraitsV3.exe Primates.trees Primates.txt
  
   
   #trim output
