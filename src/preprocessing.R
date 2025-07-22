@@ -22,13 +22,8 @@ main <- function(){
   faNames_diet <-cleanFa(dirtySpDi$manualAnnotations_FaName, dirtySpDi$ZoonomiaTip)
   fa_full_scientific_union <- cleanSpecies(faNames_diet, allSp, dirtySpDi[,length(dirtySpDi)]) 
 
-  # 
-  # as <- data.frame(i = allSp)
-  # s <- data.frame( i = faNames_diet)
 
   tree <- read.tree(here("data","AllSpeciesMasterTree.tre"))
-  #tree <- read.nexus(here("data","AllSpeciesMasterTree.tre")) #doesnt work
-  
   #' obj composed of:
     #' edge: matrix = connections between species
     #' tip.label: chr vector = species
@@ -53,9 +48,8 @@ main <- function(){
 
   
   #for use in Bayestraits script
-  #write.tree(prunedTree, here("data", "cleanTree"))  #ISSUE! NEED NEXUS 
-  write.nexus(prunedTree, here("data", "cleanTree.nex"))
-  
+  write.tree(prunedTree, here("data", "cleanTree"))  #ISSUE! NEED NEXUS 
+  writeNexus(prunedTree, file = here("data", "cleanTree.nex"))  
 }
 
 #' @method to automatically write tsv, saves time...

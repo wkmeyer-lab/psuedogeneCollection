@@ -1,0 +1,5 @@
+2
+2
+PriorAll exp 10
+Stones 100 1000
+Run
